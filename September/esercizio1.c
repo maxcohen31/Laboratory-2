@@ -37,7 +37,7 @@ void build_arrays(int size_array)
     int num_in_arr3 = 0;
     int num_in_arr5 = 0; 
 
-    // creating dynamic arrays
+    // create two dynamic arrays
     array_three = malloc(size3*sizeof(int));
     array_five = malloc(size5*sizeof(int));
 
@@ -70,7 +70,7 @@ void build_arrays(int size_array)
     size3 = num_in_arr3;
     size5 = num_in_arr5;
     
-    // create two dynamic array with new sizes
+    // create two dynamic arrays with a new size
     array_three = realloc(array_three, size3*sizeof(int));
     if (array_three == NULL) { puts("Malloc failed"); }
     array_five = realloc(array_five, size5*sizeof(int));
