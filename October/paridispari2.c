@@ -1,4 +1,4 @@
-// Programma scritto da PAsquale Rossini top programmatore del corso
+// Programma scritto da Pasquale Rossini top programmatore del corso
 
 
 #define _GNU_SOURCE
