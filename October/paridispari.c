@@ -24,6 +24,8 @@
     leggere dal primo con fscanf e scrivere sul secondo o terzo file con fprintf. 
     Quando non ci sono altri interi da leggere (cioè fscanf restituisce EOF si devono chiudere tutti i file e terminare).
 
+    Il codice l'ho scritto alle 22 dopo una giornata passata in università. Mi sono alzato alle 5 per prendere il treno.
+    Il codice fa cacare anche a me ergo non rompete le palle. Peace.
 */
 
 
