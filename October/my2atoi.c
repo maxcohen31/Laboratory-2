@@ -1,4 +1,27 @@
+/*
+    Scrivere una funzione "int mioa2toi(const char *s, int *n)"
 
+    che data una stringa s la interpreta come intero decimale (allo stesso modo di atoi). 
+    Se la conversione avviene con successo il valore ottenuto deve essere scritto in *n e la funzione deve restituire il valore 0; 
+    se invece la conversione non ha successo la variabile n non deve essere modificata e la funzione deve restituire un intero positivo che indica 
+    l'errore che si è verificato secondo il seguente schema:
+
+    se la stringa è vuota o contiene solamente spazi
+    se viene incontrato un carattere che non sia uno fra +-0123456789 (esempio, la stringa "234s7")
+    se il segno (+ o -) compare più di una volta, o compare in posizione non corretta (esempio le stringhe "+-34", "-3-4", o "-34+")
+    se compare esattamente un segno, ma nessuna cifra (ad esempio la stringa "-")
+    La conversione deve ignorare eventuali spazi iniziali e deve terminare non appena viene incontrato uno spazio. Quindi l'input "  +34 21" deve restituire il valore 0 
+    (conversione OK) e scrivere in *n il valore 34, mentre l'input "  + 34 21"deve restituire il valore 4 
+    (conversione fallita perché ha letto il segno e poi lo spazio ha fatto interrompere la conversione prima che incontrasse una qualsiasi cifra.
+
+    Per quanto riguarda la parte di calcolo, a parte la gestione del segno e degli errori, 
+    osservate che se l'input è "XYZ" e la stringa "XY" è stata convertita nel valore t allora "XYZ"vale 
+    10t +z dove z
+    è il valore tra 0 e 9 rappresentato dal carattere Z. Ricordo che i codice ascii di caratteri tra 0 e 9 sono gli interi tra 48 e 57.
+
+    it took me 4 hours...
+
+ */
 
 #define _GNU_SOURCE
 #include <string.h>
