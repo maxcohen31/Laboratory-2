@@ -56,7 +56,7 @@ char *remove_leading_spaces(const char *string)
     return result;
 }
 
-char* remove_after_space(const char* string)
+char* remove_trailing_spaces(const char* string)
 {
     char* result = strdup(string);
     int no_space_char = 0;
@@ -71,7 +71,7 @@ char* remove_after_space(const char* string)
     {
         result[no_space_char] = '\0';
     }
-  
+    free(result);
     return result;
 
 }
@@ -80,7 +80,7 @@ int mio2toi(const char *s, int *n)
 {
     int count_space = 0;
     char *new_s = remove_leading_spaces(s);
-    new_s = remove_after_space(new_s);
+    new_s = remove_trailing_spaces(new_s);
     // int converted;
 
     while (s[count_space] == ' ')
@@ -106,7 +106,7 @@ int mio2toi(const char *s, int *n)
 
     // check for invalid + or - pos
     int count_s = 0;
-    int cypher = 0;
+    int digit = 0;
     for (int i = 0; i < strlen(new_s); i++) 
     {
         if (new_s[i] == '+' || new_s[i] == '-')
@@ -115,12 +115,12 @@ int mio2toi(const char *s, int *n)
         }
     }
 
-    if (count_s >= 2 || (count_s >= 2 && cypher >= 2))
+    if (count_s >= 2 || (count_s >= 2 && digit >= 2))
     {
         *n = 3;
     }
     
-    if (count_s == 1 && cypher == 0)
+    if (count_s == 1 && digit == 0)
     {
         *n = 4;
     }
