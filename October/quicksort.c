@@ -26,7 +26,7 @@ int partition(int a[], int p, int r)
 
         do 
         {
-            i++; // increasing i since a[i] is lesser than a[i]
+            i++; // increasing i since a[i] is lesser than pivot element
         }
         while (a[i] < pivot);
         
