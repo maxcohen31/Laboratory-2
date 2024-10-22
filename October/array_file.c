@@ -30,7 +30,7 @@ typedef struct
 
 
 // crea oggetto capitale a partire dai suoi campi
-// la funzione prendein input il nome di una struct file
+// la funzione prende in input il nome di una struct file
 // e ne calcola la lunghezza
 miofile *miofile_crea(char *s)
 {
