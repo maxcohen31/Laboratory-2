@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 
     int n = 0;
 
-    for (int i = 0; i < argc; i++)
+    for (int i = 1; i < argc; i++)
     {
         miofile *tmp = miofile_crea(argv[i]);
         if (tmp != NULL)
