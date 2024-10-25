@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < 10; i++)
     {
-        // We care only about prime files sucj as elenco.3.primi or elenco.5.primi
+        // We care only about prime files such as elenco.3.primi or elenco.5.primi
         if (is_prime(i) || i == 1)
         {
             char *name = NULL;
