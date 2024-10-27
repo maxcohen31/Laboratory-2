@@ -7,7 +7,7 @@
     deve creare l'array di coppie (2 2) (3 4) (7 0) (2 1), che ordinato per differenza crescente risulta (3 4) (2 2) (2 1) (7 0), essendo le differenze rispettivamente -1, 0, 1, 7.
  */
 
-#define _GBU_SOURCE
+#define _GNU_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
