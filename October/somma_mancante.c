@@ -7,7 +7,6 @@
     (Suggerimento: per svolgere l'esercizio non è necessario salvare gli interi del file in un array, 
     è invece necessario utilizzare un array di 1000 elementi per tenere conto di quali valori tra 1 e 1000 sono presenti nel file).
 
-
  */
 
 #define _GNU_SOURCE
