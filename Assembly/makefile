@@ -10,3 +10,9 @@ CFLAGS=-std=c11 -Wall -g
 # l'eseguibile primi dipende da primi_lab.c e primi.s
 primi: primi_lab.c primi.s
 	$(CC) $(CFLAGS) primi_lab.c primi.s -o primi
+
+# confronta le stringhe passate sulla linea di comando con strcmp e armcmp
+# $^ = insieme dei prerequisiti
+# $@ = il target della regola
+strcmp: strcmp.c stricmp.s
+	$(GCC) $(CFLAGS) $^ -o $@
