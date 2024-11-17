@@ -1,0 +1,5 @@
+Spike; Pistola; 100
+Jet; Fucile; 110
+Faye; Pistola; 80
+Ed; Computer; 120
+
