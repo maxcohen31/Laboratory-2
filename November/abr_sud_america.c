@@ -115,7 +115,7 @@ capitale *abr_inserisci(capitale *root, capitale *c)
     }
 
     int ris = strcmp(c->nome,root->nome);
-    if(ris==0) 
+    if(ris == 0) 
     {   // i nomi sono uguali
         fprintf(stderr, "Nodo duplicato: ");
         capitale_stampa(c,stderr);
@@ -194,7 +194,7 @@ capitale *abr_ricerca(capitale *root, char *nome)
 // profondità massima di una foglia
 int abr_altezza(capitale *root)
 {
-    if(root==NULL)
+    if(root == NULL)
     {
         return 0;
     }
@@ -205,11 +205,80 @@ int abr_altezza(capitale *root)
     return (hl > hr) ? hl+1 : hr+1;
 }
 
+int abr_popolazione_max(capitale *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    int max_kpop = root->kpop;
+    int max_kpop_left = abr_popolazione_max(root->left);
+    int max_kpop_right = abr_popolazione_max(root->right);
+
+    if (max_kpop < max_kpop_right)
+    {
+        max_kpop = max_kpop_right;
+    }
+    else if (max_kpop < max_kpop_left)
+    {
+        max_kpop = max_kpop_left;
+    }
+
+    return max_kpop;
+}
+
+void salva_abr_inorder(const capitale *root, FILE* f)
+{
+    // visita in-order
+    if (root == NULL)
+    {
+        return;
+    }
+
+    salva_abr_inorder(root->left, f);
+    fprintf(f, "%s; %s; %d\n", root->nome, root->nazione, root->kpop);
+    salva_abr_inorder(root->right, f);
+}
+
+void salva_abr(const capitale *root)
+{
+    FILE* abr_file = fopen("salva_albero.txt", "w");
+    if (abr_file == NULL)
+    {
+        fprintf(stderr, "Error opening file");
+    }
+
+    salva_abr_inorder(root, abr_file);
+    if (fclose(abr_file) == EOF)
+    {
+        fprintf(stderr, "Error closing file");
+    }
+}
 
 
+void stampa_città_nazione(const capitale *root, const char* input)
+{
+    if (root == NULL) 
+    {
+        return;
+    }
+
+    if (strcmp(root->nazione, input) == 0)
+    {
+        // stampa le città se la nazione di input è valida
+        printf("Città: %s\n", root->nome);
+    }
+
+    stampa_città_nazione(root->left, input);
+    stampa_città_nazione(root->right, input);
+}
+
+
+// =================================================================================
 int main(int argc, char *argv[])
 {
-    if(argc<2) 
+    if(argc < 2) 
     {
         printf("Uso: %s nomefile [nome1 nome2 ...]\n",argv[0]);
         exit(1);
@@ -249,8 +318,18 @@ int main(int argc, char *argv[])
             capitale_stampa(c,stdout);
         }
     }
+
+    puts ("----- Popolazione massima -----\n");
+    int max_pop = abr_popolazione_max(root);
+    printf("Max pop: %d\n", max_pop);
+
+    printf("Salvo albero su file...\n");
+    salva_abr(root); 
+
+    // stampa_città_nazione(root, argv[2]);
     
     abr_capitale_distruggi(root);
+
 
     return 0;
 }
