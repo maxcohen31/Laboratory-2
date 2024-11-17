@@ -157,7 +157,10 @@ capitale *cancella_nome(capitale *testa, char *s)
 {
     assert(s!=NULL);
 
-    if (testa==NULL) return NULL; // lista vuota non c'è nulla da cancellare
+    if (testa == NULL)
+    {
+        return NULL; // lista vuota non c'è nulla da cancellare
+    }
                                  
     // verifico se il primo elemento va cancellato 
     if (strcmp(testa->nome,s) == 0)
@@ -173,7 +176,22 @@ capitale *cancella_nome(capitale *testa, char *s)
     return testa;
 }
 
+capitale *inverti_lista(capitale *lista)
+{
+    capitale *testa = lista;
+    capitale *next = NULL;
+    capitale *prec = NULL;
 
+    while (testa != NULL)
+    {
+        next = testa->next;
+        testa->next = prec;
+        prec = testa;
+        testa = next;
+    }
+    
+    return prec;
+}
 
 int main(int argc, char **argv)
 {
@@ -208,8 +226,8 @@ int main(int argc, char **argv)
     puts("--- inizio lista ---");
 
     // stampa lista capitali appena creata
-    stampa_capitali(testa,stdout);  
-    puts("--- fine lista ---");
+    // stampa_capitali(testa,stdout);  
+    // puts("--- fine lista ---");
 
     #if 0 // prossima lezione 
     // elimina Londra dalla lista
@@ -223,6 +241,10 @@ int main(int argc, char **argv)
     {
         fprintf(stderr,"Errore chiusura");
     }
+
+    // inverto lista e la stampo
+    inverti_lista(testa);
+    stampa_capitali(testa, stdout);
 
     // dealloca la memoria usata dalla lista 
     distruggi_capitali(testa);
