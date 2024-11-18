@@ -96,6 +96,10 @@ personaggio* crea_personaggio_da_file(FILE *input_file)
     {
         persona = crea_personaggio(name, weap, atoi(pow));
     }
+    else 
+    {
+        printf("riga ignorata %s\n", buffer);
+    }
 
     free(buffer);
     return persona; 
