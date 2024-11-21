@@ -73,22 +73,23 @@ strint *abr_inserisci(strint *root, strint *c)
         return c;
     }
 
-    int ris = strcmp(root->s, c->s);
+    int ris = strcmp(c->s, root->s);
     
     if (ris == 0) // i nomi sono uguali
     {
-        fprintf(stderr, "Nodo duplicato");
+        fprintf(stderr, "Nodo duplicato: ");
         strint_stampa(c, stderr);
         strint_distruggi(c);
     }
-    else if (ris < 0) // vado a dx
+    else if (ris < 0)
     {
-        return abr_inserisci(root->right, c);
+        root->left = abr_inserisci(root->left, c);
     }
     else 
     {
-        return abr_inserisci(root->left, c);
+        root->right = abr_inserisci(root->right, c);
     }
+    return root;
 }
 
 strint *abr_ricerca(strint *root, char *w)
@@ -133,9 +134,9 @@ int abr_strint_sommanodi(const strint *root)
     int tot = 0;
     if (root != NULL)
     {
-        tot += abr_strint_totnodi(root->left);
+        tot += abr_strint_sommanodi(root->left);
         tot += root->n;
-        tot += abr_strint_totnodi(root->right);
+        tot += abr_strint_sommanodi(root->right);
     }
 
     return tot;
