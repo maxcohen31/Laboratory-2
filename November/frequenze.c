@@ -71,6 +71,57 @@ int riempi_array_nodi(strint *root, strint **a)
     return 0;
 }
 
+int conta_parole(strint *root, int len)
+{
+    int tot_len_parole = 0;
+    if (root != NULL)
+    {
+        tot_len_parole += conta_parole(root->left, len);
+        if (strlen(root->s) == len)
+        {
+            tot_len_parole += root->n;
+        }
+        tot_len_parole += conta_parole(root->right, len);
+    }
+    return tot_len_parole;
+}
+
+int max_length(strint *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    int max = strlen(root->s);
+    int max_left = max_length(root->left);
+    int max_right = max_length(root->right);
+    
+    if (max_left < max_right)
+    {
+        max = max_right;
+    }
+    else if (max_right < max_left)
+    {
+        max = max_left;
+    }
+    return max;
+
+}
+
+void stampa_parole_di_lunghezza_n(strint *root)
+{
+    int max_word = max_length(root);
+    for (int i = 0; i <= max_word; i++)
+    {
+        int c = conta_parole(root, i);
+        if (c > 0)
+        {
+            fprintf(stderr, "Lunghezza %d -> %d parole\n", i, c);
+        }
+    }
+}
+
 // funzione confronto per qsort
 int confronta_freq(strint **a, strint **b)
 {
@@ -124,7 +175,14 @@ int main(int argc, char **argv)
     puts("**** inizio visita ****");
     abr_strint_stampa(root, stdout);
     puts("**** fine visita ****");
-    abr_strint_distruggi(root);
+
+    int length = 3;
+    int conta_p = conta_parole(root, length);
+    printf("Le parole di lunghezza %d sono %d\n", length, conta_p);
+    printf("La parola più lunga ha %d caratteri\n", max_length(root));
+
+    stampa_parole_di_lunghezza_n(root);
+
 
     return 0;
 }
