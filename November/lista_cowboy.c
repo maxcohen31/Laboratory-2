@@ -9,18 +9,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
-#include <err.h>
-
-struct _personaggio
-{
-    char *nome;
-    char *weapon;
-    int power;
-    struct _personaggio *next;
-    struct _personaggio *prev;
-};
-
-typedef struct _personaggio personaggio;
+#include "lista_cowboy.h"
 
 
 personaggio *crea_personaggio(char *nome, char *weapon, int power)
