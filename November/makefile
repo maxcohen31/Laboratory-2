@@ -2,9 +2,14 @@ CC=gcc
 CFLAGS=-std=c11 -Wall -O -g
 LDLIBS=-lm
 
-EXECS=parole frequenze legginomi
+EXECS=parole frequenze legginomi cowboy
 
 all: $(EXECS)
+
+# Regola per creare il file oggetto lista_cowboy.o
+cowboy: lista_cowboy.c lista_cowboy.h
+	$(CC) $(CFLAGS) $< -o $@ $(LDLIBS)
+
 
 parole: parole.o strint.o 
 	$(CC) parole.o strint.o $(LDLIBS) -o parole
