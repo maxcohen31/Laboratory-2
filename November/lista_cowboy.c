@@ -9,8 +9,21 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+<<<<<<< Updated upstream
 #include "lista_cowboy.h"
+=======
 
+struct _personaggio
+{
+    char *nome;
+    char *weapon;
+    int power;
+    struct _personaggio *next;
+    struct _personaggio *prev;
+};
+
+typedef struct _personaggio personaggio;
+>>>>>>> Stashed changes
 
 personaggio *crea_personaggio(char *nome, char *weapon, int power)
 {
