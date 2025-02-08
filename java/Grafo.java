@@ -1,9 +1,13 @@
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 // Nota: per costruire la documentazione delle classi
 // Grafo, Arco, Città etc. utilizzare il comando
@@ -102,6 +106,4 @@ public abstract class Grafo {
         }
         return risolti;
     }
-
-
 }
