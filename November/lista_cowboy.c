@@ -11,15 +11,6 @@
 #include <stdbool.h>
 #include "lista_cowboy.h"
 
-struct _personaggio
-{
-    char *nome;
-    char *weapon;
-    int power;
-    struct _personaggio *next;
-    struct _personaggio *prev;
-};
-
 typedef struct _personaggio personaggio;
 
 personaggio *crea_personaggio(char *nome, char *weapon, int power)
