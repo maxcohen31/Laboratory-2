@@ -9,9 +9,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
-<<<<<<< Updated upstream
 #include "lista_cowboy.h"
-=======
 
 struct _personaggio
 {
@@ -23,7 +21,6 @@ struct _personaggio
 };
 
 typedef struct _personaggio personaggio;
->>>>>>> Stashed changes
 
 personaggio *crea_personaggio(char *nome, char *weapon, int power)
 {
@@ -139,6 +136,7 @@ personaggio *crea_lista_coda(FILE *input_file)
     return head;
 }
 
+// crea una lista concatenata partendo dalla testa
 personaggio *crea_lista_testa(FILE *input_file)
 {
     assert (input_file != NULL);
@@ -176,6 +174,7 @@ int main(int argc, char **argv)
         printf("Uso: %s <filename>", argv[0]);
     }
 
+    // lista inizialmente vuota
     personaggio *lista_personaggi = NULL;
     FILE *f = fopen(argv[1], "r");
     if (f == NULL)
@@ -184,7 +183,7 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-    puts("----- Creo lista... -----\n");
+    puts("----- Creo lista -----\n");
     // lista_personaggi = crea_lista_coda(f);
     lista_personaggi = crea_lista_testa(f);
 
