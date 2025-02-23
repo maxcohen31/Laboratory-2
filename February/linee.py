@@ -19,9 +19,9 @@ class File:
 
     def __lt__(self, other):
         """
-        Ordinamento:
-        - Prima in base alla riga che contiene `pattern` (lessicograficamente)
-        - In caso di parità, in base al nome del file (lessicograficamente)
+        Ordinamento 
+         prima in base alla riga che contiene pattern 
+         in caso di parità, in base al nome del file
         """
         def prima_linea_con_pattern(file):
             for line in file.linee:
