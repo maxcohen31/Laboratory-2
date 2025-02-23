@@ -18,32 +18,29 @@ class File:
             self.linee = linee 
 
     def __lt__(self, other):
-        prima_linea_pattern = None 
-        for l in self.linee:
-            if pattern in l:
-                prima_linea_pattern = l
-                break
+        """
+        Ordinamento:
+        - Prima in base alla riga che contiene `pattern` (lessicograficamente)
+        - In caso di parità, in base al nome del file (lessicograficamente)
+        """
+        def prima_linea_con_pattern(file):
+            for line in file.linee:
+                if pattern in line:
+                    return line
+            return None
 
-        seconda_linea_pattern = None
-        for l in other.linee:
-            if pattern in l:
-                seconda_linea_pattern = l
-                break
+        prima_linea_self = prima_linea_con_pattern(self)
+        prima_linea_other = prima_linea_con_pattern(other)
 
-        if prima_linea_pattern is None and seconda_linea_pattern is None:
+        if prima_linea_self is None and prima_linea_other is None:
             return self.nome < other.nome
-        if prima_linea_pattern is None:
+        if prima_linea_self is None:
             return False
-        if prima_linea_pattern is not None and seconda_linea_pattern is not None:
+        if prima_linea_other is None:
             return True
-        if prima_linea_pattern < seconda_linea_pattern:
-            return True
-        return self.nome < other.nome
-         
-
-    def __hash__(self):
-        # per usare set
-        return hash((self.nome, tuple(self.linee))) 
+        if prima_linea_self == prima_linea_other:
+            return self.nome < other.nome
+        return prima_linea_self < prima_linea_other         
 
     def __str__(self):
         return f"### {self.nome}\n" + "".join(self.linee)
@@ -96,15 +93,9 @@ if __name__ == "__main__":
     # delle linee minore o uguale al parametro num
     tutti = [f for f in tutti if len(f.linee) <= num]
 
-    pochi = []
-    visti = set()
-
-    for file_obj in tutti:
-        if file_obj in visti:
-            continue
-        if any(pattern in line for line in file_obj.linee):
-                pochi.append(file_obj)
-                visti.add(file_obj) 
+    pochi = [f for f in tutti if any(pattern in line for line in f.linee)]
+    pochi.sort()
+   
 
     for i in pochi:
         print(f"'pochi' contiene {len(pochi)} file")
