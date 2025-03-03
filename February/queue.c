@@ -149,6 +149,19 @@ void printQueue(queue *q)
     printf("NULL");
 }
 
+queue insertionSort(queue *q)
+{
+    assert (~isEmpty(q));
+
+    for (int i = 0; i < q->size; ++i)
+    {
+        int j = i - 1;
+    }
+
+
+    
+}
+
 
 int main(int argc, char **argv)
 {

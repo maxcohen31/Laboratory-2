@@ -31,12 +31,13 @@ if __name__ == "__main__":
 
         for path, subdirs, files in os.walk(src):
             for name in files:
-                lista_file.append(os.path.join(name))
+                lista_file.append(os.path.join(path, name))
 
         sorted(lista_file)
         print(lista_file)
         
         last_name = ""
+        counter = 0
 
         for file in lista_file:
             if (Path(file).is_symlink()):
