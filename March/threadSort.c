@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     }
 
     // ordinamento
-    // l'array con elemento è già ordinato
+    // l'array con solo un elemento è già ordinato
     if (n > 1)
     {
         int dimenN1 = n /2;
