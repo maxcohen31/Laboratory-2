@@ -29,8 +29,11 @@
 #define THREAD_NUM 3
 
 char arr[ARRAY_SIZE];
-int head = 0; // Indice di scrittura
-int tail = 0; // Indice di lettura
+// indice scrittura
+int head = 0; 
+// indice lettura
+int tail = 0; 
+
 
 // dati del produttore
 typedef struct 
@@ -39,7 +42,6 @@ typedef struct
     sem_t *spazioDisponibile;
     sem_t *datiDaLeggere;
     char charProd;
-    int *count;
 } pdati;
 
 // dati del consumatore
@@ -47,7 +49,6 @@ typedef struct
 {
     char *localBuffer;
     int bufferIndex;
-    int *count;
     pthread_mutex_t *pmutex;
     sem_t *spazioDisponibile;
     sem_t *datiDaLeggere;
@@ -58,15 +59,18 @@ void *produttore(void *args)
     pdati *pd = (pdati*)args;
     for (int i = 0; i < ARRAY_SIZE; ++i)
     {
+        // aspetto che ci sia spazio disponibile nel buffer
         sem_wait(pd->spazioDisponibile);
+        // acquisisco mutua esclusione
         pthread_mutex_lock(pd->pmutex);
-        if (*(pd->count) < ARRAY_SIZE)
         {
             arr[head] = pd->charProd;
+            // aumento l'indice scrittura
             head = (head + 1) % ARRAY_SIZE;
-            (*(pd->count))++;
         }
+        // rilascio la mutua esclusione
         pthread_mutex_unlock(pd->pmutex);
+        // segnalo che c'è un nuovo dato
         sem_post(pd->datiDaLeggere);
     }
     pthread_exit(NULL);
@@ -77,20 +81,23 @@ void *consumatore(void *args)
     cdati *cd = (cdati*)args;
     for (int j = 0; j < 2*ARRAY_SIZE; ++j)
     {
+        // aspetto che ci sia almeno un dato da leggere
         sem_wait(cd->datiDaLeggere); 
         pthread_mutex_lock(cd->pmutex);
-        if (*(cd->count) > 0)
         {
+            // consumo un carattere
             cd->localBuffer[cd->bufferIndex] = arr[tail];
+            // l'indice di lettura viene incrementato
             tail = (tail + 1) % ARRAY_SIZE;
+            // l'indice del buffer viene incrementato
             cd->bufferIndex = ((cd->bufferIndex + 1) % (2 * ARRAY_SIZE));
-            (*(cd->count))--;
         }
         pthread_mutex_unlock(cd->pmutex);
+        // segnalo che c'è spazio disponibile
         sem_post(cd->spazioDisponibile);
     }
 
-    // Stampa i caratteri dopo aver rilasciato il mutex
+    // stampa i caratteri dopo aver rilasciato il mutex
     for (int k = 0; k < 2*ARRAY_SIZE; ++k)
     {
         printf("carattere nell'array: %c\n", cd->localBuffer[k]);
@@ -103,36 +110,29 @@ int main(int argc, char **argv)
 {
     pthread_t th[THREAD_NUM];
     pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZER;
-    int count = 0; // contatore buffer
     sem_t spazioDisponibile;
     sem_t datiDaLeggere;
     sem_init(&spazioDisponibile, 0, ARRAY_SIZE); // buffer vuoto all'inizio
     sem_init(&datiDaLeggere, 0, 0); // buffer vuoto - nessun elemento da leggere
 
     // crea struct produttore e struct consumatore
-    pdati prod1;
-    prod1.pmutex = &mu;
-    prod1.spazioDisponibile = &spazioDisponibile;
-    prod1.datiDaLeggere = &datiDaLeggere;
-    prod1.charProd = '+';
-    prod1.count = &count; 
-    
-    pdati prod2;
-    prod2.pmutex = &mu;
-    prod2.spazioDisponibile = &spazioDisponibile;
-    prod2.datiDaLeggere = &datiDaLeggere;
-    prod2.charProd = '-';
-    prod2.count = &count; 
+    pdati prod1 = {&mu, &spazioDisponibile, &datiDaLeggere, '+'};
+    pdati prod2 = {&mu, &spazioDisponibile, &datiDaLeggere, '-'}; 
 
     // consumatore
     cdati cons;
-    cons.spazioDisponibile = &spazioDisponibile;
-    cons.datiDaLeggere = &datiDaLeggere;
-    cons.pmutex = &mu;
     cons.localBuffer = malloc(2* ARRAY_SIZE * sizeof(char));
+    if (cons.localBuffer == NULL)
+    {
+        fprintf(stderr, "Malloc fallita");
+        exit(1);
+    }
+    cons.pmutex = &mu;
+    cons.datiDaLeggere = &datiDaLeggere;
+    cons.spazioDisponibile = &spazioDisponibile;
     cons.bufferIndex = 0;
-    cons.count = &count;
 
+    // creazione dei thread
     pthread_create(&th[0], NULL, produttore, &prod1);
     pthread_create(&th[1], NULL, produttore, &prod2);
     pthread_create(&th[2], NULL, consumatore, &cons);
@@ -143,6 +143,7 @@ int main(int argc, char **argv)
         pthread_join(th[i], NULL);
     }
     
+    // libera risorse
     sem_destroy(&spazioDisponibile);
     sem_destroy(&datiDaLeggere);
     pthread_mutex_destroy(&mu);
