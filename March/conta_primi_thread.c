@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <pthread.h>
 
+#include "xerrori.h"
+
 bool is_prime(int n)
 {
     int start = 2;
@@ -91,7 +93,7 @@ int main(int argc, char **argv)
         somma += d[i].somme_parziali;
     }
 
-    printf("Number of primes between 1 and %d (excluded): %d", m, sommma);
+    printf("Number of primes between 1 and %d (excluded): %d", m, somma);
 
     return 0;
 }
