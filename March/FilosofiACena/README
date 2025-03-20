@@ -1,0 +1,9 @@
+filosofi-stallo.c   versione naive che va in stallo
+filosofi-a.c        versione in cui si impone un ordinamento nell'acquisizione
+                    delle risorse (vengono mostrate 2 versioni)
+filosofi-b.c        versione che utilizza la tecnica "wait WITHOUT holding"
+filosofi-c.c        versione che utilizza il concetto di 'monitor' come
+                    approccio di piu' alto livello per la sincronizzazione
+
+
+ 
