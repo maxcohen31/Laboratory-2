@@ -42,11 +42,13 @@ void Mangia(int myid, unsigned int *seed) {
   // usare anche il seguente ciclo for
   // for(volatile long i=0;i<r; ++i);
 
+  // struttura che rappresenta l'intervallo di tempo dell'azione 'mangiare'
   struct timespec t={0, r};
   nanosleep(&t,NULL);
   fprintf(stdout, "%d -- Finito di mangiare\n", myid);
 }
 
+// come la funzione Mangia 
 void Pensa(int myid, unsigned int *seed) {
   fprintf(stdout, "%d -- Penso\n", myid);
   long r = rand_r(seed) % 1000000;
