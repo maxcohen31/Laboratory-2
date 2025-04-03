@@ -148,14 +148,14 @@ void *consumer(void *args)
         pthread_cond_signal(&notFullBuf);
         pthread_mutex_unlock(&mutex);
 
-        // calcolo gcd
+        // calcolo gcd e aggiorna l'array result
         int r = gcd(c.x, c.y);
         pthread_mutex_lock(&mutex);
         result = realloc(result, (size + 1) * sizeof(int));
         if (result == NULL)
         {
             fprintf(stderr, "Errore realloc\n");
-            break;;
+            exit(EXIT_FAILURE);
         }
         result[size] = r;
         size++;
