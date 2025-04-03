@@ -96,7 +96,7 @@ void *producer(void *args)
     while (true)
     {
         pthread_mutex_lock(&mutex);
-        // se non ci sono coppie esco
+        // se non ci sono coppie di interi esco
         if (fscanf(f, "%d %d", &a, &b) != 2)
         {
             pthread_mutex_unlock(&mutex);
