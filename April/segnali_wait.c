@@ -61,11 +61,12 @@ int main(int argc, char *argv[])
 
         tot_segnali++;
         if(s!=SIGUSR1) {
-        kill(getpid(),SIGUSR1); // manda SIGUSR1 a se stesso  
+            kill(getpid(),SIGUSR1); // manda SIGUSR1 a se stesso  
         }
-        if(s==SIGUSR2) {
-        // forza uscita dal loop infinito del main()
-        continua = 0;
+        if(s==SIGUSR2) 
+        {
+            // forza uscita dal loop infinito del main()
+            continua = 0;
         }
     } while(continua!=0); 
     printf("Ricevuti: %d segnali (uscito dal loop)\n", tot_segnali);
