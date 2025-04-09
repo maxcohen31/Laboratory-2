@@ -1,5 +1,6 @@
 /*
     A simple queue implementation 
+    February 2025
 */
 
 #include <stdio.h>
@@ -53,7 +54,7 @@ void destroyQueue(queue *q)
     while (q->front != NULL)
     {
         // saving the first element 
-        node *tmp = q->front;
+                node *tmp = q->front;
         // looping over elements 
         q->front = q->front->next; 
         free(tmp);
@@ -149,22 +150,9 @@ void printQueue(queue *q)
     printf("NULL");
 }
 
-queue insertionSort(queue *q)
-{
-    assert (~isEmpty(q));
-
-    for (int i = 0; i < q->size; ++i)
-    {
-        int j = i - 1;
-    }
-
-
-    
-}
-
 
 int main(int argc, char **argv)
-{
+        {
 
     queue *qu = queueInit();
     printf("Queue is empty: %d\n", isEmpty(qu));
