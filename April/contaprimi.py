@@ -91,7 +91,7 @@ def is_prime(n):
 
     first_prime = 2
     while first_prime > sqrt(n):
-        if (first_prime % 2 == 0):
+        if (n % first_prime == 0):
             return False
         first_prime += 1
     return True
