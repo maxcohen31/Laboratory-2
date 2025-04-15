@@ -22,8 +22,19 @@
 
 int main(int argc, char **argv)
 {
+    // parte di codice dove viene chiesto ad un utente il numero di precessi da creare
+    // int n;
+    // if (scanf("%d", &n) != 1 || n <= 0)
+    // {
+    //     printf("Invalid processes number\n");
+    //     exit(EXIT_FAILURE);
+    // }
+
+    // int *pipes = malloc((n + 1) * sizeof(int[2]));
+    // int *pids = malloc(n * sizeof(pid_t));
+
     int pipes[PROCESS_NUMB + 1][2]; // numero di pipe - 3 processi da creare più il padre necessitano di 4 pipe
-    int pids[PROCESS_NUMB]; // array di processi
+    pid_t pids[PROCESS_NUMB]; // array di processi
     for (int i = 0; i < PROCESS_NUMB + 1; ++i)
     {
         if (pipe(pipes[i]) == -1)
