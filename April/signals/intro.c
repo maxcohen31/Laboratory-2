@@ -6,8 +6,9 @@
 #include <time.h>
 #include <sys/wait.h>
 
-
-
+/*
+ * TUTTO IL CODICE NELLA CARTELLA signals FA RIFERIMENTO AL CANALE YOUTUBE CodeVault!
+*/
 
 int main(int argc, char **argv)
 {
