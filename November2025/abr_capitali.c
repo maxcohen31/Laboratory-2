@@ -60,7 +60,7 @@ void preorder(const capitale *c, FILE *f, int depth)
     preorder(c->right, f, depth + 1);
 }
 
-/* destrigge l'albero binario di ricerca */
+/* distrugge l'albero binario di ricerca */
 void distruggiABR(capitale *root)
 {
     if (root != NULL)
@@ -176,6 +176,40 @@ void ABRCondition(capitale *r, FILE *f, bool (*funz)(capitale *))
     ABRCondition(r->right, f, funz);
 }
 
+/* funzione che prende una capitale c e restituisce true se e solo se la città si trova a sud-est di Pisa (43.70853, 10.4036) */
+bool pisaSE(capitale *c)
+{
+    return (c->lat <= 43.70853 && c->lon <= 10.4036);
+}
+
+/* funzione che conta il numero di città nel range [argv[2], argv[3]] */
+int abr_ricerca_range(capitale *r, char *smin, char *smax)
+{
+    if (r == NULL)
+    {
+        return 0;
+    }
+    
+    /* contatore */
+    int res = 0;
+
+    if (strcmp(r->nome, smax) <= 0 && strcmp(r->nome, smin) >= 0)
+    {
+        res += 1;
+    }
+
+    if (strcmp(r->nome, smin) >= 0)
+    {
+        res += abr_ricerca_range(r->left, smin, smax);
+    }
+
+    if (strcmp(r->nome, smax) <= 0)
+    {
+        res += abr_ricerca_range(r->right, smin, smax);
+    }
+    return res;
+}
+
 int main(int argc, char **argv)
 {
     if (argc < 2) 
@@ -199,10 +233,10 @@ int main(int argc, char **argv)
     }
 
     puts("### INIZIO LISTA ###");
-    capitaleStampa(root, f);
+    capitaleStampa(root, stdout);
     puts ("### FINE LISTA ###");
 
-    printf("Altezza: %d", altezzaABR(root));
+    printf("Altezza: %d\n", altezzaABR(root));
 
     /* esegue la ricerca delle città passate sulla linea di comando */
     for (int i = 2; i < argc; i++)
@@ -219,12 +253,14 @@ int main(int argc, char **argv)
         }
     }
 
+    /* stampa capitali che si trovano a Sud-Est di Pisa */
+    printf("---- Capitali a Sud-Est di Pisa ----\n");
+    ABRCondition(root, stdout, &pisaSE);
+
+    printf("Città in range [%s, %s]: %d", argv[2], argv[3], abr_ricerca_range(root, argv[2], argv[3]));
+
     distruggiABR(root);
     return 0;
-
-
-
-
 }
 
 void termina(const char *messaggio)
