@@ -66,6 +66,53 @@ public abstract class Grafo {
         @return mappa che associa ad ogni nodo raggiungibile da s 
         il costo del cammino minimo e il nodo precedente
 	*/
+
+    /* restituisce tutti i nodi */
+    abstract public Set<Nodo> tuttiNodi();
+
+    
+
+    /* Algoritmo di Prim */
+    List<Arco> mst () {
+
+        List<Arco> result = new ArrayList<>();
+        Set<Nodo> visitati = new HashSet<>();
+        TreeSet<Arco> possibili = new TreeSet<>();
+
+        for (Nodo n:  tuttiNodi()){
+            if (!visitati.contains(n)) {
+                /* Prim's routine*/
+                visitati.add(n); /* aggiungo il primo nodo a visitati */
+                possibili.addAll(this.uscenti(n)); /* nodi collegati a n */
+    
+                /* finchè ci sono nodi in possibili cicla */
+                while (!possibili.isEmpty()) {
+                    /* prendo l'arco più piccolo */
+                    Arco smallestArch = possibili.pollFirst();
+                    Nodo n1 = smallestArch.n1;
+                    Nodo n2 = smallestArch.n2;
+
+                    if (visitati.contains(n1) && visitati.contains(n2)) {
+                        continue;
+                    }
+                    result.add(smallestArch);
+
+                    /*nodo esterno */
+                    Nodo esterno = visitati.contains(n1) ? n2 : n1;
+                    visitati.add(esterno);
+
+                    /* aggiunge tutti gli archi uscenti dal nuovo nodo verso i nodi non visitati */
+                    for (Arco a: this.uscenti(esterno)) {
+                        if (!visitati.contains(a.altro_estremo(esterno))) {
+                            possibili.add(a);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+}
+
     public Map<Nodo, Cammino> dijkstra(Nodo s) {
         // verifica che la sorgente sia nel grafo
         assert (this.contiene_nodo(s)): "La sorgente deve appartenere al grafo";

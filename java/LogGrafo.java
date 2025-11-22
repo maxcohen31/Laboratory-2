@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.SortedSet;
+import java.util.Set;
 
 
 // implementazione della classe Grafo
@@ -69,6 +70,11 @@ public class LogGrafo extends Grafo {
     // restiuisce insieme di tutti gli archi del grafo ordinati per peso crescente
     public SortedSet<Arco> archi() {
         return this.archi;
+    }
+
+    @Override
+    public Set<Nodo> tuttiNodi() {
+        return this.nodi.keySet();
     }
 
     // restituisce insieme di archi uscenti da un nodo ordinati per peso crescente

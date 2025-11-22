@@ -17,7 +17,8 @@ public class Arco implements Comparable<Arco> {
     public boolean stessi_estremi(Arco a) {
         if ((n1.equals(a.n1)) && (n2.equals(a.n2))) return true;
         if ((n2.equals(a.n1)) && (n1.equals(a.n2))) return true;
-        throw new IllegalArgumentException("Nodo non estremo dell'arco");
+        //throw new IllegalArgumentException("Nodo non estremo dell'arco");
+        return false;
     }
 
     public Nodo altro_estremo(Nodo n) {

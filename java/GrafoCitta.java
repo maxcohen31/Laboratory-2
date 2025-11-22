@@ -43,8 +43,8 @@ public class GrafoCitta {
             else {
                 elenco.add(c);
             }
-            br.close();
         }
+        br.close();
     }
     catch (Exception e) {
         System.err.println("Errore: " + e);
@@ -77,6 +77,11 @@ public class GrafoCitta {
       System.out.println(n.etichetta() + " " + m.get(n));
     }
     System.out.println("Ci sono " + m.size() + " città raggiungibili da " + sorgente.etichetta()  ); 
+    /* MST */
+    List<Arco> r = g.mst();
+    for (Arco a: r) {
+        System.out.println(a);
+    }
   }
         
 
