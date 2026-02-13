@@ -20,7 +20,7 @@ public class ContaLinee implements Comparable<ContaLinee> {
     String nome;
 
     public ContaLinee(int l, String nome) {
-        this.lines = l; // numero di lineee del file
+        this.lines = l; // numero di linee del file
         this.nome = nome; // nome del file
     }
 
