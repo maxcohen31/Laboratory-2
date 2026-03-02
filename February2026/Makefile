@@ -3,11 +3,12 @@ CFLAGS=-Wall -Wextra -g -std=c11 -O -pthread
 LDLIBS=-lm -pthread
 
 #CFILES=abr.c
-OBJECT=contaprimi.o xerrori.o
-BINARY=contaprimi.out tabella.out
+OBJECT=conta_caratteri.o xerrori.o
+BINARY=conta_caratteri
 
 all: $(BINARY)
 
+# regola per la creazione degli eseguibili
 $(BINARY): $(OBJECT)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDLIBS)
 
@@ -16,6 +17,6 @@ $(BINARY): $(OBJECT)
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -rf $(BINARY) $(OBJECT)
+	rm -f $(BINARY) $(OBJECT)
 
 
