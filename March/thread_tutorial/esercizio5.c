@@ -19,11 +19,11 @@
 typedef struct 
 {
     char *pathname; // file path
-    pthread_mutex_t *mu; // mutex
     char target; // carattere da cercare
     long start; // range start
     long end; // range end
     int *count; // contatore occorrenze del carattere
+    pthread_mutex_t *mu; // mutex
 } thrd;
 
 // Thread function
