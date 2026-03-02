@@ -21,8 +21,8 @@ typedef struct
     char *pathname; // file path
     pthread_mutex_t *mu; // mutex
     char target; // carattere da cercare
-    int start; // range start
-    int end; // range end
+    long start; // range start
+    long end; // range end
     int *count; // contatore occorrenze del carattere
 } thrd;
 
