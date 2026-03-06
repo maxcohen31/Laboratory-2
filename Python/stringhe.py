@@ -1,3 +1,10 @@
+"""
+    Compito in aula del 5/3/2026
+    Testo sul moodle del corso
+    
+    Funziona ma il codice è brutto
+"""
+
 from os.path import isdir
 from sys import argv
 import os
@@ -9,7 +16,7 @@ class Stringa:
         self.stringa = s
         self.occorrenze = 0
         self.numfiles = 0
-        self.files = [] # store the files where the string is found
+        self.files = []  # list of files containing the string
     
     def __str__(self) -> str:
         return f"{self.stringa:<20} {self.occorrenze:>4} {self.numfiles:>4}"
@@ -31,7 +38,7 @@ def build_string(file, word) -> Stringa:
 def find_words_in_src(src, word) -> List[Stringa]:
     matches = []
 
-    # scr must be a directory
+    # src must be a directory
     assert(isdir(src)), "[Error]: src must be a directory"
 
     src_files = os.listdir(src)
@@ -74,11 +81,14 @@ def main():
     # for v in sorted_output:
         # print(v, v.files)
     
+    # Second part
     try:
-        os.mkdir(destination_dir)
+        os.mkdir(destination_dir) # make the destination directory
     except FileExistsError:
         print(f" {destination_dir} already exists!")
         
+    # For each word create a directory in destination_dir.
+    # Inside it create one symbolic link for each file containing that word
     for s in sorted_output:
         path = os.path.join(destination_dir, s.stringa)
         os.makedirs(path, exist_ok=True)
