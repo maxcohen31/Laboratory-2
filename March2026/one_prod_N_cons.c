@@ -21,7 +21,6 @@
 
 #include "xerrori.h"
 #include <bits/floatn-common.h>
-#include <math.h>
 
 #define BUF_SIZE 10
 #define THREAD_CONSUMER 4
@@ -29,12 +28,11 @@
 bool is_prime(int n)
 {
     if (n < 2) return false;
-    int first_prime = 2;
-    while (first_prime <= sqrt(n)) 
+    if (n % 2 == 0) return (n == 2);
+    for (int i = 3; i*i < n; i+=2)
     {
-        if (n % first_prime == 0) return false;
-        first_prime++;
-    }
+        if (n % i == 0) return false;
+    } 
     return true;
 
 }
