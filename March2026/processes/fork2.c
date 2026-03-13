@@ -4,15 +4,13 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-// che numero stampa?
+/* che numero stampa? 66 poi newline perché il processo padre termina per ultimo */
 
 int main() {
   int val = 5;
   pid_t pid;
-  if ((pid=fork())>0) {
-    wait(NULL);
-  } 
-  ++val;
+  if ((pid=fork()) == 0) wait(NULL); 
+  val++;
 
   printf("%d", val);
 

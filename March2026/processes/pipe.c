@@ -14,13 +14,11 @@
 //
 #define _GNU_SOURCE
 #include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
 #include <limits.h>
-#include <errno.h>
 
 int main(int argc, char *argv[]) {    
     int canale[2];
@@ -36,9 +34,10 @@ int main(int argc, char *argv[]) {
 
       // se commentiamo la seguente linea di codice, il programma
       // non termina. Perche'?
-      close(canale[1]);
+      close(canale[1]); /* Perché il figlio mantiene aperta la scrittura della pipe 
+      Quando il padre chiude la pipe in scrittura alla riga 71 il figlio ce l'ha aperta. */
       
-      while(1) {
+    while(1) {
 	char buf[PIPE_BUF];
 
 	int r= read(canale[0], buf, sizeof(buf));
@@ -69,7 +68,7 @@ int main(int argc, char *argv[]) {
     
     // se commentiamo la seguente linea di codice, il programma
     // non termina. Perche'?
-    close(canale[1]);
+    close(canale[1]); /* Non chiudento il lato scrittura il figlio attende di leggere dati. */
     
     if (waitpid(pid, NULL, 0) == -1) {
       perror("waitpid");
