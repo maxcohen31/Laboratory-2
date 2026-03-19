@@ -3,8 +3,8 @@ CFLAGS=-Wall -Wextra -g -std=c11 -O -pthread
 LDLIBS=-lm -pthread
 
 #CFILES=abr.c
-OBJECT=mult_files_cond_var.o  xerrori.o
-BINARY=mult_files_cond_var
+OBJECT=mult_files_sem.o  xerrori.o
+BINARY=mult_files_sem
 
 all: $(BINARY)
 
