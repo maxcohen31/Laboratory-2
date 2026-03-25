@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
     /* Reading all integers from the file */
     /* fread: 
-     * - a is where we store the chinks of data 
+     * - a is where we store the chunks of data 
      * - sizeof(int) is the dimension of each block in bytes 
      * - n is the number of items that will be read from the input stream 
      * - f pointer to our input stream */
