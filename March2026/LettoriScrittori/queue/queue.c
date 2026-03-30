@@ -17,7 +17,7 @@
 
 // qui assumiamo (per semplicita') che le mutex non siano mai di
 // tipo 'robust mutex' (pthread_mutex_lock(3)) per cui possono
-// di fatto ritornare solo EINVAL se la mutex non e' stata inizializzata.
+// di fatto ritornare solo EINVAL (invalid argument) se la mutex non e' stata inizializzata.
 
 static inline Node_t  *allocNode()                  { return malloc(sizeof(Node_t));  }
 static inline Queue_t *allocQueue()                 { return malloc(sizeof(Queue_t)); }
@@ -42,22 +42,22 @@ Queue_t *initQueue() {
     q->tail = q->head;    
     q->qlen = 0;
     if (pthread_mutex_init(&q->qlock, NULL) != 0) {
-	perror("mutex init");
-	return NULL;
+	  perror("mutex init");
+	  return NULL;
     }
     if (pthread_cond_init(&q->qcond, NULL) != 0) {
-	perror("mutex cond");
-	if (&q->qlock) pthread_mutex_destroy(&q->qlock);
-	return NULL;
-    }    
+	  perror("mutex cond");
+	  if (&q->qlock) pthread_mutex_destroy(&q->qlock);
+	  return NULL;
+      }    
     return q;
 }
 
 void deleteQueue(Queue_t *q) {
     while(q->head != q->tail) {
-	Node_t *p = (Node_t*)q->head;
-	q->head = q->head->next;
-	freeNode(p);
+	  Node_t *p = (Node_t*)q->head;
+	  q->head = q->head->next;
+	  freeNode(p);
     }
     if (q->head) freeNode((void*)q->head);
     if (&q->qlock)  pthread_mutex_destroy(&q->qlock);
@@ -84,7 +84,7 @@ void *pop(Queue_t *q) {
     if (q == NULL) { errno= EINVAL; return NULL;}
     LockQueue(q);
     while(q->head == q->tail) {
-	UnlockQueueAndWait(q);
+	  UnlockQueueAndWait(q);
     }
     // locked
     assert(q->head->next);
@@ -97,6 +97,7 @@ void *pop(Queue_t *q) {
     freeNode(n);
     return data;
 } 
+
 void* top(Queue_t *q) {
     if (q == NULL) { errno= EINVAL; return NULL;}
     LockQueue(q);
