@@ -3,6 +3,20 @@
 
 #include <pthread.h>
 
+
+/*
+ *
+ *       head
+ *        |
+ *        v
+ * [ dummy | next ] ----> [ 10 | next ] ----> [ 20 | next=NULL ]
+                                     Λ
+                                     |
+                                    tail
+*/
+
+
+
 /** Elemento della coda.
  *
  */

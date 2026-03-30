@@ -12,7 +12,6 @@
  */
 
 
-
 /* ------------------- funzioni di utilita' -------------------- */
 
 // qui assumiamo (per semplicita') che le mutex non siano mai di
