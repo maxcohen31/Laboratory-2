@@ -6,7 +6,7 @@
  * La prima fork crea un processo P1. Quindi abbiamo P0 (padre) e il figlio P1.
  * P0 e P1 stampano il proprio pid. 
  * Adesso entrambi i processi chiamano fork(): abbiamo 4 distinti Pid. 
- * Tutti e quattro i chiamano printf. */
+ * Tutti e quattro i processi chiamano printf. */
 
 int main() {
 
