@@ -28,8 +28,10 @@ static inline unsigned long getusec() {
 static pthread_mutex_t mutex    = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t  readerGo = PTHREAD_COND_INITIALIZER;
 static pthread_cond_t  writerGo = PTHREAD_COND_INITIALIZER;
-static int activeReaders = 0, activeWriters = 0;
-static int waitingReaders = 0, waitingWriters = 0;
+static int activeReaders = 0;
+static int activeWriters = 0;
+static int waitingReaders = 0;
+static int waitingWriters = 0;
 
 void startRead() {
   pthread_mutex_lock(&mutex);
@@ -42,6 +44,7 @@ void startRead() {
   activeReaders++;
   pthread_mutex_unlock(&mutex);
 }
+
 void doneRead() {
   pthread_mutex_lock(&mutex);
   activeReaders--;
