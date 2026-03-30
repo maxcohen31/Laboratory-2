@@ -9,7 +9,7 @@
 int main() {
   int val = 5;
   pid_t pid;
-  if ((pid=fork()) == 0) wait(NULL); 
+  if ((pid=fork()) == 0) wait(NULL); /* non bloccante - nessun processo aspetta */
   val++;
 
   printf("%d", val);
