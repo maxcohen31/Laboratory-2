@@ -24,7 +24,7 @@ int main(int argc,char **argv)
 
 #ifdef USA_EXEC
     /* I let start the reader */
-    if (xfork() == 0)
+    if (xfork(QUI) == 0)
     {
         /* We are violating the condtions and we pass argv[0] different from the program name. 
          * We can run a Python program though.
