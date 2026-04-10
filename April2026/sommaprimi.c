@@ -35,6 +35,8 @@ int main(int argc, char **argv)
     int aux = argc-1;
     
     /* Shared memory creation */
+    /* The shared memory consists of the aux+2 variables: 
+     * | nump | indice | sommap[0] | sommap[1] | sommap[2] .... | */
     int shm_size = (aux * sizeof(int)) + sizeof(long); /* Using 4 + 4 + 8*aux bytes of shared memory */
     int fd = xshm_open(SH_MEM, O_RDWR|O_CREAT, 0660, QUI);
     xftruncate(fd, shm_size, QUI);
