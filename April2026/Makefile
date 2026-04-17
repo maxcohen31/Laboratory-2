@@ -16,7 +16,7 @@ LDLIBS=-lm -pthread -lrt
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=xscrivi.out contaprimi.out lettore.out scrittore.out scrittorex.out shm0.out sommaprimi.out sommaprimi_aux.out shm_prod.out shm_cons.out shm_prod2.out shm_cons2.out
+EXECS=segnaliRT.out sigwait.out
 # primo target: gli eseguibili sono precondizioni
 # quindi verranno tutti creati
 all: $(EXECS) 
@@ -32,6 +32,8 @@ scrittorex.o: scrittore.c
 # pattern rule che esprime che tutti i .o dipendono da xerrori.h
 %.o: %.c xerrori.h
 
+sigwaitinfo.o: sigwait.c xerrori.h
+	$(CC) $(CFLAGS) $< $@ $^ $(LDLIBS)
 
 # esempio di target che non corrisponde a una compilazione
 # ma esegue la cancellazione dei file oggetto e degli eseguibili
