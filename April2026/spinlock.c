@@ -1,5 +1,5 @@
-#include <sched.h>
 #define _GNU_SOURCE
+#include <sched.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -76,11 +76,11 @@ void *tbody(void *args)
 #elif defined (USE_ATOMIC_SUM)
         atomic_fetch_add(a->somma, i);                              /* Somma atomica */
 #else /* Spinlock */
-        while (atomic_flag_test_and_set(a->lock)) sched_yield();    /* Aggiungendo questa chiamata la spinlock è molto più veloce */
+        while (atomic_flag_test_and_set(a->lock)) sched_yield();   /* Aggiungendo questa chiamata la spinlock è molto più veloce */
         *(a->somma) += i;                                           /* *(a->somma) non + atomico */
         atomic_flag_clear(a->lock);
-    }
 #endif
+    }
     pthread_exit(NULL);
 }
 
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
     long somma = 0;
     d.somma = &somma;
     pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZER;
-    d.lock = &mu;
+    d.mu = &mu;
 #elif defined (USE_ATOMIC_SUM)
     atomic_long somma = ATOMIC_VAR_INIT(0);
     d.somma = &somma;
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
     atomic_flag lock = ATOMIC_FLAG_INIT;
     d.lock = &lock;
     long somma = 0;
-    d.num_somme = num_somme;
+    d.somma = &somma;
 #endif
     pthread_barrier_t b;
     pthread_barrier_init(&b, NULL, num_thread);
@@ -118,8 +118,7 @@ int main(int argc, char **argv)
     d.num_somme = num_somme;
 
     for (int i = 0; i < num_thread; i++)
-    {
-        if (pthread_create(&th[i], NULL, tbody, &d) != 0)
+    { if (pthread_create(&th[i], NULL, tbody, &d) != 0)
         {
             perror("pthread_create() error");
             exit(EXIT_FAILURE);
@@ -135,3 +134,5 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
+

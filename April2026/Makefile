@@ -16,7 +16,7 @@ LDLIBS=-lm -pthread -lrt
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=segnaliRT.out sigwait.out alice.out bob.out heap_signal.out
+EXECS=segnaliRT.out sigwait.out alice.out bob.out heap_signal.out spinlock.out mspinlock.out atomspinlock.out
 # primo target: gli eseguibili sono precondizioni
 # quindi verranno tutti creati
 all: $(EXECS) 
@@ -34,6 +34,17 @@ scrittorex.o: scrittore.c
 
 sigwaitinfo.o: sigwait.c xerrori.h
 	$(CC) $(CFLAGS) $< $@ $^ $(LDLIBS)
+
+# eseguibili basati su spinlock
+spinlock.out: spinlock.c
+	$(CC) $(CFLAGS) $< -o $@
+mspinlock.out: spinlock.c
+	$(CC) $(CFLAGS) $< -o $@ -DUSE_MUTEX
+atomspinlock.out: spinlock.c
+	$(CC) $(CFLAGS) $< -o $@ -DUSE_ATOMIC_SUM
+
+
+
 
 # esempio di target che non corrisponde a una compilazione
 # ma esegue la cancellazione dei file oggetto e degli eseguibili
