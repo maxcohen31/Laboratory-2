@@ -82,6 +82,7 @@ void push(LockFreeStack *stack, int value)
 int pop(LockFreeStack *stack, int *value)
 {
     Node *old_head;
+    /* Il ciclo riprova se un altro thread ha modificato head tra load e swap */
     do 
     {
         old_head = atomic_load(&stack->head);
@@ -106,7 +107,6 @@ void push(LockFreeStack *stack, int value)
     pthread_mutex_lock(stack->mu);
     new_node->next = stack->head;
     stack->head = new_node;
-    new_node->next = stack->head;
     pthread_mutex_unlock(stack->mu);
 }
 
@@ -212,7 +212,7 @@ int main(int argc, char **argv)
     /* Creazione thread consumatore */
     for (int i = 0; i < data.num_pop_threads; i++)
     {
-        if (pthread_create(&pop_threads[i], NULL, push_thread, &data) != 0)
+        if (pthread_create(&pop_threads[i], NULL, pop_thread, &data) != 0)
         {
             perror("pthread_create");
             exit(EXIT_FAILURE);
