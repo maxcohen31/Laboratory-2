@@ -189,7 +189,7 @@ int main(int argc, char **argv)
         .push_id = ATOMIC_VAR_INIT(0)
     };
 #ifdef USE_MUTEX 
-    pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZATION;
+    pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZER;
     data.stack.mu = &mu;
 #endif
 

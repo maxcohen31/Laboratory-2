@@ -16,7 +16,7 @@ LDLIBS=-lm -pthread -lrt
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=segnaliRT.out sigwait.out alice.out bob.out heap_signal.out spinlock.out mspinlock.out atomspinlock.out
+EXECS=segnaliRT.out sigwait.out alice.out bob.out heap_signal.out spinlock.out mspinlock.out atomspinlock.out stack.out mustack.out
 # primo target: gli eseguibili sono precondizioni
 # quindi verranno tutti creati
 all: $(EXECS) 
@@ -43,7 +43,11 @@ mspinlock.out: spinlock.c
 atomspinlock.out: spinlock.c
 	$(CC) $(CFLAGS) $< -o $@ -DUSE_ATOMIC_SUM
 
-
+# stack
+stack.out: stack.c
+	$(CC) $(CFLAGS) $< -o $@
+mustack.out: stack.c
+	$(CC) $(CFLAGS) $< -o $@ -DUSE_MUTEX
 
 
 # esempio di target che non corrisponde a una compilazione
